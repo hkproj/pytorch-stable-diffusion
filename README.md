@@ -1,2 +1,2 @@
 # pytorch-stable-diffusion
-Stable Diffusion implemented from scratch in PyTorch
+PyTorch implementation of Stable Diffusion from scratch
