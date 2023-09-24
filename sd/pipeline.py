@@ -91,13 +91,15 @@ def generate(
             input_image_tensor = torch.tensor(input_image_tensor, dtype=torch.float32)
             # (Height, Width, Channel) -> (Height, Width, Channel)
             input_image_tensor = rescale(input_image_tensor, (0, 255), (-1, 1))
+            # (Height, Width, Channel) -> (Batch_Size, Height, Width, Channel)
+            input_image_tensor = input_image_tensor.unsqueeze(0)
             # (Batch_Size, Height, Width, Channel) -> (Batch_Size, Channel, Height, Width)
-            input_images_tensor = input_images_tensor.permute(0, 3, 1, 2)
+            input_image_tensor = input_image_tensor.permute(0, 3, 1, 2)
 
             # (Batch_Size, 4, Latents_Height, Latents_Width)
             encoder_noise = torch.randn(latents_shape, generator=generator, device=device)
             # (Batch_Size, 4, Latents_Height, Latents_Width)
-            latents = encoder(input_images_tensor, encoder_noise)
+            latents = encoder(input_image_tensor, encoder_noise)
 
             # Add noise to the latents (the encoded input image)
             # (Batch_Size, 4, Latents_Height, Latents_Width)
