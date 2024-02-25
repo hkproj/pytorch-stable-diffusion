@@ -88,7 +88,7 @@ def generate(
             # (Height, Width, Channel)
             input_image_tensor = np.array(input_image_tensor)
             # (Height, Width, Channel) -> (Height, Width, Channel)
-            input_image_tensor = torch.tensor(input_image_tensor, dtype=torch.float32)
+            input_image_tensor = torch.tensor(input_image_tensor, dtype=torch.float32, device=device)
             # (Height, Width, Channel) -> (Height, Width, Channel)
             input_image_tensor = rescale(input_image_tensor, (0, 255), (-1, 1))
             # (Height, Width, Channel) -> (Batch_Size, Height, Width, Channel)
