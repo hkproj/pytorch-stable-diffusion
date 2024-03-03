@@ -33,7 +33,7 @@ class SelfAttention(nn.Module):
         k = k.view(interim_shape).transpose(1, 2)
         v = v.view(interim_shape).transpose(1, 2)
 
-        # (Batch_Size, H, Seq_Len, Dim) @ (Batch_Size, H, Dim, Seq_Len) -> (Batch_Size, H, Seq_Len, Seq_Len)
+        # (Batch_Size, H, Seq_Len, Dim / H) @ (Batch_Size, H, Dim / H, Seq_Len) -> (Batch_Size, H, Seq_Len, Seq_Len)
         weight = q @ k.transpose(-1, -2)
         
         if causal_mask:
