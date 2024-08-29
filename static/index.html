@@ -1,0 +1,54 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stable Diffusion Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #image-container {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            padding: 10px;
+            background: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generate Image with Stable Diffusion</h1>
+    <input type="text" id="prompt" placeholder="Enter your prompt" style="width: 300px; padding: 10px; font-size: 16px;">
+    <button onclick="generateImage()" style="padding: 10px 20px; font-size: 16px;">Generate</button>
+    <div id="image-container"></div>
+
+    <script>
+        async function generateImage() {
+            const prompt = document.getElementById('prompt').value;
+            const response = await fetch('/generate/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            });
+            const data = await response.json();
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.innerHTML = `<img src="data:image/png;base64,${data.image}" alt="Generated Image">`;
+        }
+    </script>
+</body>
+</html>
